@@ -30,17 +30,18 @@
 
         /* Hero Section Styling - Modern and engaging */
         .hero-section {
-            position: relative;
-            height: 80vh; /* Adjust height for impact */
-            background-image: url('https://placehold.co/1920x1080/e8e2dd/6a6a6a?text=Exquisite+Jewelry+Collection'); /* Placeholder for a high-quality hero image */
-            background-size: cover;
-            background-position: center;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            text-align: center;
-            color: #fff;
-        }
+    position: relative;
+    height: 90vh;
+    background-image: url("{% static 'images/hero.jpg' %}");
+    background-size: cover;
+    background-position: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    color: #fff;
+}
+
         .hero-overlay {
             position: absolute;
             top: 0;
@@ -149,7 +150,13 @@
 
 <nav class="navbar navbar-expand-lg">
     <div class="container">
-        <a class="navbar-brand" href="/">Lustre & Luxe</a>
+
+        <a class="navbar-brand d-flex align-items-center" href="/">
+    <img src="{% static 'images/logo.png' %}" alt="Lustre & Luxe Logo" height="40" class="me-2">
+    Lustre & Luxe
+</a>
+
+
         <div class="d-flex ms-auto">
             <ul class="navbar-nav mb-2 mb-lg-0">
                 <li class="nav-item">
