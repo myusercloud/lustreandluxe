@@ -1,44 +1,161 @@
 {% load static %}
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Jewelry Store - Products</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stunning Jewelry - Collection</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #f7f3ef; /* A soft, off-white for elegance */
+            color: #333;
+        }
+        .navbar {
+            background-color: #ffffff;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+        .navbar-brand {
+            font-family: 'Playfair Display', serif;
+            font-weight: 600;
+            color: #1a1a1a !important;
+        }
+        .jumbotron {
+            background-color: #e8e2dd;
+            padding: 4rem 2rem;
+        }
+        .product-grid {
+            margin-top: 2rem;
+        }
+        .product-card {
+            border: none;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            cursor: pointer;
+            overflow: hidden;
+            border-radius: 8px;
+        }
+        .product-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 15px rgba(0,0,0,0.1);
+        }
+        .product-card img {
+            height: 300px;
+            object-fit: cover;
+        }
+        .card-body {
+            text-align: center;
+        }
+        .card-title {
+            font-family: 'Playfair Display', serif;
+            font-weight: 500;
+            font-size: 1.5rem;
+            margin-bottom: 0.25rem;
+        }
+        .card-text {
+            color: #777;
+            font-size: 0.9rem;
+        }
+        .product-price {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: #2c3e50;
+            margin-top: 0.5rem;
+        }
+        .btn-primary {
+            background-color: #2c3e50;
+            border-color: #2c3e50;
+            transition: background-color 0.3s ease;
+        }
+        .btn-primary:hover {
+            background-color: #1a242f;
+            border-color: #1a242f;
+        }
+        .footer {
+            background-color: #2c3e50;
+            color: #f7f3ef;
+            padding: 2rem 0;
+        }
+        .admin-link {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 1000;
+        }
+    </style>
 </head>
-<body class="bg-light">
+<body>
 
-<div class="container py-5">
-    <h1 class="mb-4 text-center">Our Jewelry Collection</h1>
-
-    <!-- Admin Dashboard Button -->
-    <div class="text-center mb-4">
-        <a href="/admin/" class="btn btn-primary btn-lg shadow-sm">Admin!</a>
+<nav class="navbar navbar-expand-lg">
+    <div class="container">
+        <a class="navbar-brand" href="/">Stunning Jewels</a>
+        <div class="d-flex ms-auto">
+            <ul class="navbar-nav mb-2 mb-lg-0">
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Rings</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Necklaces</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Bracelets</a>
+                </li>
+            </ul>
+            <form class="d-flex ms-3">
+                <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+                <button class="btn btn-outline-dark" type="submit">🔍</button>
+            </form>
+        </div>
     </div>
+</nav>
 
-    <div class="row">
+<div class="jumbotron text-center">
+    <h1 class="display-4" style="font-family: 'Playfair Display', serif;">Discover Our Exquisite Collection</h1>
+    <p class="lead">Handcrafted pieces that tell a story.</p>
+</div>
+
+<div class="container product-grid">
+    <div class="row row-cols-1 row-cols-md-3 g-4">
         {% for product in products %}
-            <div class="col-md-4 mb-4">
-                <div class="card shadow-sm">
-                    {% if product.image %}
-                        <img src="{{ product.image.url }}" class="card-img-top" alt="{{ product.name }}">
-                    {% else %}
-                        <img src="{% static 'no-image.png' %}" class="card-img-top" alt="No Image">
-                    {% endif %}
-                    <div class="card-body">
-                        <h5 class="card-title">{{ product.name }}</h5>
-                        <p class="card-text text-muted">{{ product.category }}</p>
-                        <p class="fw-bold">Ksh {{ product.price }}</p>
-                        <a href="{% url 'product_detail' product.pk %}" class="btn btn-dark">View Details</a>
+            <div class="col">
+                <a href="{% url 'product_detail' product.pk %}" class="text-decoration-none text-dark">
+                    <div class="card product-card h-100">
+                        {% if product.image %}
+                            <img src="{{ product.image.url }}" class="card-img-top" alt="{{ product.name }}">
+                        {% else %}
+                            <img src="{% static 'no-image.png' %}" class="card-img-top" alt="No Image">
+                        {% endif %}
+                        <div class="card-body">
+                            <h5 class="card-title">{{ product.name }}</h5>
+                            <p class="card-text">{{ product.category }}</p>
+                            <p class="product-price">Ksh {{ product.price }}</p>
+                        </div>
                     </div>
-                </div>
+                </a>
             </div>
         {% empty %}
-            <p>No products available.</p>
+            <div class="col-12 text-center">
+                <p>No products available.</p>
+            </div>
         {% endfor %}
     </div>
 </div>
 
+<div class="admin-link">
+    <a href="/admin/" class="btn btn-outline-secondary btn-sm rounded-circle shadow-sm">
+        <i class="bi bi-person-fill"></i>
+    </a>
+</div>
+
+<footer class="footer mt-5">
+    <div class="container text-center">
+        <p class="mb-0">&copy; 2024 Stunning Jewels. All rights reserved.</p>
+    </div>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
