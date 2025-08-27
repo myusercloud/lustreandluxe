@@ -1,7 +1,7 @@
 from pyexpat.errors import messages
 from django.contrib import messages
 from django.shortcuts import redirect, render, get_object_or_404
-from .models import Product
+from .models import Order, OrderItem, Product
 from django.views.decorators.http import require_POST
 
 
