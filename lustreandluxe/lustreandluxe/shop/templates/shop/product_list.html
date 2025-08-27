@@ -117,8 +117,8 @@
     <p class="lead">Handcrafted pieces that tell a story.</p>
 </div>
 
-<div class="container product-grid">
-    <div class="row row-cols-1 row-cols-md-3 g-4">
+<div class="container product-grid my-5">
+    <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4 g-lg-5">
         {% for product in products %}
             <div class="col">
                 <a href="{% url 'product_detail' product.pk %}" class="text-decoration-none text-dark">
@@ -146,7 +146,7 @@
 
 <div class="admin-link">
     <a href="/admin/" class="btn btn-outline-secondary btn-sm rounded-circle shadow-sm">
-        <i class="bi bi-person-fill"></i>
+        <i class="bi bi-person-fill">Admin</i>
     </a>
 </div>
 
