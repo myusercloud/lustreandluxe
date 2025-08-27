@@ -27,13 +27,14 @@
             <p class="fw-bold fs-4">Ksh {{ product.price }}</p>
             <p><strong>Stock:</strong> {{ product.stock }}</p>
 
-            <form method="post" action="#">
-                {% csrf_token %}
-                <div class="input-group mb-3" style="max-width: 150px;">
-                    <input type="number" name="quantity" value="1" min="1" max="{{ product.stock }}" class="form-control">
-                    <button class="btn btn-dark" type="submit">Add to Cart</button>
-                </div>
-            </form>
+            <form method="post" action="{% url 'cart_add' product.id %}">
+    {% csrf_token %}
+    <div class="input-group mb-3" style="max-width: 150px;">
+        <input type="number" name="quantity" value="1" min="1" max="{{ product.stock }}" class="form-control">
+        <button class="btn btn-dark" type="submit">Add to Cart</button>
+    </div>
+</form>
+
         </div>
     </div>
 </div>
