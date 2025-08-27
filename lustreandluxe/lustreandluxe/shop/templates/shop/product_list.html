@@ -32,60 +32,60 @@
             margin-top: 2rem;
         }
         /* Update the existing product-card styles */
-.product-card {
-    border: none;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-    cursor: pointer;
-    overflow: hidden;
-    border-radius: 8px;
-}
-.product-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 10px 20px rgba(0,0,0,0.15); /* A slightly more pronounced shadow */
-}
+        .product-card {
+            border: none;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            cursor: pointer;
+            overflow: hidden;
+            border-radius: 8px;
+        }
+        .product-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.15); /* A slightly more pronounced shadow */
+        }
 
-/* New image sizing for a more luxurious feel */
-.product-card img {
-    height: 350px; /* Increased image height */
-    object-fit: cover;
-}
+        /* Adjusted image sizing for a more luxurious feel */
+        .product-card img {
+            height: 250px; /* Reduced image height for better balance */
+            object-fit: cover;
+        }
 
-/* Adjust card body padding */
-.product-card .card-body {
-    padding: 1.5rem; /* More generous padding inside the card */
-    text-align: center;
-}
+        /* Adjust card body padding */
+        .product-card .card-body {
+            padding: 1.5rem; /* More generous padding inside the card */
+            text-align: center;
+        }
 
-/* Adjust font sizes for elegance */
-.card-title {
-    font-size: 1.75rem; /* Larger, more elegant title */
-}
+        /* Adjust font sizes for elegance */
+        .card-title {
+            font-size: 1.75rem; /* Larger, more elegant title */
+        }
 
-.product-price {
-    font-size: 1.5rem; /* Larger price to draw attention */
-    font-weight: 600;
-}
+        .product-price {
+            font-size: 1.5rem; /* Larger price to draw attention */
+            font-weight: 600;
+        }
 
-/* Adjust grid gutters for more space between cards */
-.g-lg-5 {
-    --bs-gutter-x: 3rem; /* Custom variable for horizontal gutter */
-    --bs-gutter-y: 3rem; /* Custom variable for vertical gutter */
-}
+        /* Adjust grid gutters for more space between cards */
+        .g-lg-5 {
+            --bs-gutter-x: 3rem; /* Custom variable for horizontal gutter */
+            --bs-gutter-y: 3rem; /* Custom variable for vertical gutter */
+        }
 
-@media (min-width: 992px) {
-    /* For large screens, use 3 columns with more gutter space */
-    .row-cols-lg-3 > * {
-        flex: 0 0 auto;
-        width: 33.3333333333%;
-    }
-}
-@media (min-width: 768px) and (max-width: 991.98px) {
-    /* For medium screens, use 2 columns with slightly less gutter space */
-    .row-cols-md-2 > * {
-        flex: 0 0 auto;
-        width: 50%;
-    }
-}
+        @media (min-width: 992px) {
+            /* For large screens, use 3 columns with more gutter space */
+            .row-cols-lg-3 > * {
+                flex: 0 0 auto;
+                width: 33.3333333333%;
+            }
+        }
+        @media (min-width: 768px) and (max-width: 991.98px) {
+            /* For medium screens, use 2 columns with slightly less gutter space */
+            .row-cols-md-2 > * {
+                flex: 0 0 auto;
+                width: 50%;
+            }
+        }
         .btn-primary {
             background-color: #2c3e50;
             border-color: #2c3e50;
