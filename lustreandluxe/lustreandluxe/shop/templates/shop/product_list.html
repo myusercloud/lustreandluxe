@@ -4,256 +4,253 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Lustre & Luxe - Collection</title>
-    <!-- Load Bootstrap CSS -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
-    <!-- Load Google Fonts -->
+    <title>Lustre & Luxe - Homepage</title>
+    <!-- Inter font for body text, Playfair Display for headings -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet">
+    <!-- Load Tailwind CSS from CDN for utility-first styling -->
+    <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        /* Base styles for a clean, elegant feel */
+        /* Custom styles for colors and font families */
+        :root {
+            --primary-bronze: #C19A6B; /* A warm, elegant bronze */
+            --bg-cream: #FBF9F6;       /* A soft, gentle off-white */
+            --text-charcoal: #332E2E;  /* A rich, dark charcoal for soft contrast */
+        }
+
         body {
-            font-family: 'Poppins', sans-serif;
-            background-color: #f7f3ef; /* A soft, off-white for elegance */
-            color: #333;
+            font-family: 'Inter', sans-serif;
+            color: var(--text-charcoal);
+            background-color: var(--bg-cream);
         }
-        .navbar {
-            background-color: #ffffff;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
-        }
-        .navbar-brand {
+
+        .playfair-display {
             font-family: 'Playfair Display', serif;
-            font-weight: 600;
-            color: #1a1a1a !important;
         }
 
-        /* Hero Section Styling - Modern and engaging */
-        .hero-section {
-    position: relative;
-    height: 90vh;
-    background-image: url("{% static 'shop/images/hero.png' %}");
-    background-size: cover;
-    background-position: center;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
-    color: #fff;
-}
-
-        .hero-overlay {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.4); /* Dark overlay for text readability */
-        }
-        .hero-content {
+        /* Hero image animation for parallax effect */
+        .hero-bg {
+            /* Using a placeholder image that fits the new color scheme */
+            background-image: url('https://placehold.co/1920x1080/DCCDC7/C19A6B?text=Refined+Collection');
+            background-size: cover;
+            background-position: center;
+            height: 100vh;
+            transition: background-position 0.1s ease-out;
             position: relative;
-            z-index: 10;
-            padding: 2rem;
-        }
-        .hero-title {
-            font-family: 'Playfair Display', serif;
-            font-size: 3rem;
-            font-weight: 600;
-            margin-bottom: 1rem;
-            color: #fff;
-        }
-        .hero-subtitle {
-            font-size: 1.25rem;
-            margin-bottom: 2rem;
-            font-weight: 300;
         }
 
-        /* Product Grid and Card styling for a refined look */
-        .product-grid {
-            margin-top: 4rem; /* More space below the hero */
-        }
-        .product-card {
-            border: none;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-            cursor: pointer;
-            overflow: hidden;
-            border-radius: 8px;
-        }
-        .product-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 20px rgba(0,0,0,0.15);
-        }
-        .product-card img {
-            height: 250px;
-            object-fit: cover;
-        }
-        .product-card .card-body {
-            padding: 1.5rem;
-            text-align: center;
-        }
-        .card-title {
-            font-size: 1.5rem;
-            font-weight: 600;
-        }
-        .product-price {
-            font-size: 1.25rem;
-            font-weight: 600;
-        }
-        .g-lg-5 {
-            --bs-gutter-x: 3rem;
-            --bs-gutter-y: 3rem;
+        /* Fade-in animation for sections as they appear */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.8s ease-out, transform 0.8s ease-out;
         }
 
-        /* Testimonials Section Styling */
-        .testimonials-section {
-            background-color: #e8e2dd;
-            padding: 4rem 0;
-            text-align: center;
-        }
-        .testimonial-card {
-            background-color: #fff;
-            padding: 2rem;
-            border-radius: 8px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
-            margin-bottom: 2rem;
+        .fade-in.is-visible {
+            opacity: 1;
+            transform: translateY(0);
         }
 
-        /* General styling for buttons and links */
-        .btn-primary {
-            background-color: #1a1a1a;
-            border-color: #1a1a1a;
-            transition: background-color 0.3s ease, transform 0.3s ease;
-            font-weight: 500;
-            padding: 0.75rem 2rem;
-        }
-        .btn-primary:hover {
-            background-color: #2c3e50;
-            border-color: #2c3e50;
-            transform: translateY(-2px);
+        /* Subtle hover effect for product cards */
+        .product-card:hover .product-image {
+            transform: scale(1.05);
+            transition: transform 0.4s ease-in-out;
         }
 
-        /* Footer styling */
-        .footer {
-            background-color: #2c3e50;
-            color: #f7f3ef;
-            padding: 2rem 0;
-        }
-        .admin-link {
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            z-index: 1000;
+        .product-image {
+            transition: transform 0.4s ease-in-out;
         }
     </style>
 </head>
-<body>
+<body class="overflow-x-hidden">
 
-<nav class="navbar navbar-expand-lg">
-    <div class="container">
-
-        <a class="navbar-brand d-flex align-items-center" href="/">
-    <img src="{% static 'shop/images/logo2.jpg' %}" alt="Lustre & Luxe Logo" height="40" class="me-2">
-    Lustre & Luxe
-</a>
-
-
-        <div class="d-flex ms-auto">
-            <ul class="navbar-nav mb-2 mb-lg-0">
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Rings</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Necklaces</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Bracelets</a>
-                </li>
-            </ul>
-            <form class="d-flex ms-3">
-                <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-                <button class="btn btn-outline-dark" type="submit">🔍</button>
-            </form>
+<!-- Navigation Bar -->
+<nav id="navbar" class="fixed w-full z-50 transition-all duration-300 ease-in-out bg-stone-900 bg-opacity-80 backdrop-blur-lg shadow-lg">
+    <div class="container mx-auto px-4 py-4 flex justify-between items-center">
+        <!-- Logo -->
+        <a href="#" class="flex items-center space-x-2">
+            <svg class="h-8 w-8 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-3.023 3-6s-1.343-6-3-6m0 12c-1.657 0-3-3.023-3-6s1.343-6 3-6m-9 6h6"></path>
+            </svg>
+            <span class="playfair-display text-2xl font-bold tracking-widest text-white">Lustre & Luxe</span>
+        </a>
+        <!-- Nav Links -->
+        <div class="hidden md:flex items-center space-x-10">
+            <a href="#" class="text-white hover:text-gray-300 transition-colors">Home</a>
+            <a href="#" class="text-white hover:text-gray-300 transition-colors">Shop All</a>
+            <a href="#" class="text-white hover:text-gray-300 transition-colors">Collections</a>
+            <a href="#" class="text-white hover:text-gray-300 transition-colors">About</a>
+            <a href="#" class="text-white hover:text-gray-300 transition-colors">Contact</a>
+            <!-- Shopping Cart Icon -->
+            <a href="#" class="text-white hover:text-gray-300 transition-colors" aria-label="Shopping Cart">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.182 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
+                </svg>
+            </a>
         </div>
+        <!-- Mobile menu button -->
+        <button id="mobile-menu-btn" class="text-white md:hidden" aria-label="Open mobile menu">
+            <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path>
+            </svg>
+        </button>
+    </div>
+    <!-- Mobile Menu -->
+    <div id="mobile-menu" class="hidden md:hidden bg-stone-900 text-gray-200 py-4 px-4 shadow-lg">
+        <a href="#" class="block py-2">Home</a>
+        <a href="#" class="block py-2">Shop All</a>
+        <a href="#" class="block py-2">Collections</a>
+        <a href="#" class="block py-2">About</a>
+        <a href="#" class="block py-2">Contact</a>
+        <a href="#" class="block py-2 mt-2 border-t border-gray-700">Shopping Cart</a>
     </div>
 </nav>
 
-<!-- Hero Section -->
-<div class="hero-section">
-    <div class="hero-overlay"></div>
-    <div class="hero-content">
-        <h1 class="hero-title">Experience Unmatched Craftsmanship</h1>
-        <p class="hero-subtitle">Each piece is a testament to timeless beauty and elegance. Find your story.</p>
-        <a href="#products" class="btn btn-primary btn-lg">Shop Now</a>
+<!-- Hero Section with Parallax Effect -->
+<section id="hero-section" class="relative w-full h-screen flex items-center justify-center text-center">
+    <div class="hero-bg absolute inset-0"></div>
+    <div class="relative z-10 p-6 max-w-4xl">
+        <h1 class="playfair-display text-4xl sm:text-6xl font-extrabold text-charcoal leading-tight animate-pulse">Timeless Elegance, Crafted for You</h1>
+        <p class="mt-4 text-charcoal text-lg sm:text-xl font-light">Each piece tells a unique story of artistry and passion.</p>
+        <a href="#featured-collections" class="mt-8 inline-block px-8 py-4 bg-white text-charcoal font-semibold uppercase tracking-widest rounded-full shadow-lg hover:bg-gray-200 transform transition-transform duration-300 hover:scale-105">Shop Collection</a>
     </div>
-</div>
+</section>
 
-<div id="products" class="container product-grid my-5">
-    <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4 g-lg-5">
-        {% for product in products %}
-            <div class="col">
-                <a href="{% url 'product_detail' product.pk %}" class="text-decoration-none text-dark">
-                    <div class="card product-card h-100">
+<!-- Our Products Section -->
+<section id="our-products" class="py-20 fade-in">
+    <div class="container mx-auto px-4">
+        <div class="text-center mb-16">
+            <h2 class="playfair-display text-4xl font-bold mb-4">Our Jewelry Collection</h2>
+            <p class="text-gray-600 max-w-2xl mx-auto">Explore our exquisite pieces, each crafted to perfection. This is a static representation of your dynamic product list.</p>
+        </div>
+        
+        <!-- Corrected Tailwind-based product grid -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
+            {% for product in products %}
+                <div class="product-card bg-white rounded-xl shadow-lg hover:shadow-xl transform transition-transform duration-300 hover:scale-105">
+                    <a href="{% url 'product_detail' product.pk %}" class="block">
                         {% if product.image %}
-                            <img src="{{ product.image.url }}" class="card-img-top" alt="{{ product.name }}">
+                            <img src="{{ product.image.url }}" class="product-image w-full h-72 object-cover rounded-t-xl" alt="{{ product.name }}">
                         {% else %}
-                            <img src="{% static 'no-image.png' %}" class="card-img-top" alt="No Image">
+                            <img src="https://placehold.co/400x400/C19A6B/332E2E?text=No+Image" class="product-image w-full h-72 object-cover rounded-t-xl" alt="No Image">
                         {% endif %}
-                        <div class="card-body">
-                            <h5 class="card-title">{{ product.name }}</h5>
-                            <p class="card-text">{{ product.category }}</p>
-                            <p class="product-price">Ksh {{ product.price }}</p>
+                        <div class="p-6 text-center">
+                            <h5 class="text-xl font-semibold mb-1">{{ product.name }}</h5>
+                            <p class="text-gray-500 text-sm mb-2">{{ product.category }}</p>
+                            <p class="font-bold text-lg text-charcoal">Ksh {{ product.price }}</p>
                         </div>
-                    </div>
-                </a>
-            </div>
-        {% empty %}
-            <div class="col-12 text-center">
-                <p>No products available.</p>
-            </div>
-        {% endfor %}
+                    </a>
+                </div>
+            {% empty %}
+                <p class="col-span-full text-center text-gray-600 p-8">No products available.</p>
+            {% endfor %}
+        </div>
     </div>
-</div>
+</section>
 
-<!-- Testimonials Section -->
-<div class="testimonials-section">
-    <div class="container">
-        <h2 class="display-5" style="font-family: 'Playfair Display', serif;">What Our Clients Say</h2>
-        <div class="row mt-4">
-            <div class="col-md-6 col-lg-4 d-flex">
-                <div class="testimonial-card flex-grow-1">
-                    <p class="lead fst-italic">"The quality and design are simply stunning. I've received so many compliments!"</p>
-                    <p class="fw-bold mt-3">- Jane Doe, Nairobi</p>
-                </div>
-            </div>
-            <div class="col-md-6 col-lg-4 d-flex">
-                <div class="testimonial-card flex-grow-1">
-                    <p class="lead fst-italic">"Excellent customer service and truly unique pieces. I will definitely be a returning customer."</p>
-                    <p class="fw-bold mt-3">- Peter Kamau, Mombasa</p>
-                </div>
-            </div>
-            <div class="col-md-12 col-lg-4 d-flex">
-                <div class="testimonial-card flex-grow-1">
-                    <p class="lead fst-italic">"My new favorite accessory. The necklace feels both delicate and strong, a work of art."</p>
-                    <p class="fw-bold mt-3">- Aisha Abdi, Kisumu</p>
-                </div>
+<!-- Newsletter Subscription Section -->
+<section id="newsletter" class="py-20 fade-in">
+    <div class="container mx-auto px-4 flex flex-col items-center text-center">
+        <h2 class="playfair-display text-4xl font-bold mb-4">Stay in the Loop</h2>
+        <p class="text-gray-600 max-w-xl mx-auto mb-8">Receive exclusive offers and be the first to know about new arrivals and special events.</p>
+        <form class="flex flex-col sm:flex-row w-full max-w-md space-y-4 sm:space-y-0 sm:space-x-4">
+            <input type="email" placeholder="Enter your email address" class="flex-1 px-4 py-3 border border-gray-300 rounded-full focus:outline-none focus:ring-1 focus:ring-gray-600">
+            <button type="submit" class="px-8 py-3 bg-white text-charcoal font-semibold uppercase tracking-widest rounded-full hover:bg-gray-200 transition-colors">Subscribe</button>
+        </form>
+    </div>
+</section>
+
+<!-- Footer -->
+<footer class="bg-charcoal text-gray-400 py-16 mt-10" style="background-color: var(--text-charcoal); color: #ccc;">
+    <div class="container mx-auto px-4 grid grid-cols-1 md:grid-cols-4 gap-12">
+        <!-- Brand Info -->
+        <div>
+            <h3 class="playfair-display text-2xl font-bold text-white mb-4">Lustre & Luxe</h3>
+            <p class="text-sm">Exquisite jewelry crafted for moments that matter. We believe in quality, elegance, and timeless design.</p>
+        </div>
+        <!-- Quick Links -->
+        <div>
+            <h4 class="text-white font-semibold uppercase mb-4">Quick Links</h4>
+            <ul class="space-y-2 text-sm">
+                <li><a href="#" class="hover:text-white transition-colors">Shop All</a></li>
+                <li><a href="#" class="hover:text-white transition-colors">Our Story</a></li>
+                <li><a href="#" class="hover:text-white transition-colors">FAQs</a></li>
+                <li><a href="#" class="hover:text-white transition-colors">Shipping & Returns</a></li>
+            </ul>
+        </div>
+        <!-- Contact Info -->
+        <div>
+            <h4 class="text-white font-semibold uppercase mb-4">Contact Us</h4>
+            <ul class="space-y-2 text-sm">
+                <li>Email: info@lustreandluxe.com</li>
+                <li>Phone: +1 234 567 890</li>
+                <li>Address: 123 Jewelry Ave, New York, NY 10001</li>
+            </ul>
+        </div>
+        <!-- Social Media -->
+        <div>
+            <h4 class="text-white font-semibold uppercase mb-4">Follow Us</h4>
+            <div class="flex space-x-4">
+                <a href="#" class="hover:text-white transition-colors" aria-label="Instagram">
+                    <svg class="h-6 w-6" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07c3.252.148 4.772 1.637 4.904 4.85.058 1.265.069 1.645.069 4.849 0 3.204-.012 3.584-.069 4.849-.132 3.212-1.644 4.73-4.904 4.849-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.128-4.772-1.637-4.904-4.85-.058-1.265-.069-1.645-.069-4.849 0-3.204.012-3.584.069-4.849.132-3.212 1.644-4.73 4.904-4.849 1.266-.058 1.644-.07 4.85-.07zm0-2.163c-3.259 0-3.666.014-4.931.071-4.003.18-6.155 2.322-6.335 6.324-.057 1.265-.071 1.672-.071 4.932 0 3.259.014 3.666.071 4.931.18 4.003 2.322 6.155 6.324 6.335 1.265.057 1.672.071 4.932.071 3.259 0 3.666-.014 4.931-.071 4.003-.18 6.155-2.322 6.324-6.324.057-1.265.071-1.672.071-4.932 0-3.259-.014-3.666-.071-4.931-.18-4.003-2.322-6.155-6.324-6.335-1.265-.057-1.672-.071-4.932-.071zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.162 6.162 6.162 6.162-2.759 6.162-6.162-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4s1.791-4 4-4 4 1.79 4 4-1.791 4-4 4zm6.5-11.458c0 .884-.716 1.6-1.6 1.6s-1.6-.716-1.6-1.6c0-.884.716-1.6 1.6-1.6s1.6.716 1.6 1.6z"/></svg>
+                </a>
+                <a href="#" class="hover:text-white transition-colors" aria-label="Facebook">
+                    <svg class="h-6 w-6" fill="currentColor" viewBox="0 0 24 24"><path d="M22.675 0h-21.35c-.732 0-1.325.593-1.325 1.325v21.35c0 .732.593 1.325 1.325 1.325h11.45v-9.613h-3.243v-3.754h3.243v-2.784c0-3.21 1.956-4.968 4.84-4.968 1.378 0 2.552.102 2.894.148v3.188h-1.884c-1.492 0-1.777.708-1.777 1.748v2.296h3.554l-.5 3.754h-3.054v9.613h6.082c.732 0 1.325-.593 1.325-1.325v-21.35c0-.732-.593-1.325-1.325-1.325z"/></svg>
+                </a>
+                <a href="#" class="hover:text-white transition-colors" aria-label="Pinterest">
+                    <svg class="h-6 w-6" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0c-6.627 0-12 5.373-12 12s5.373 12 12 12c6.627 0 12-5.373 12-12s-5.373-12-12-12zm-2.455 18.019c-.382 1.434-1.859 1.31-2.477 1.168-1.077-.249-1.996-.73-2.802-1.44-.805-.71-1.442-1.6-1.92-2.617-.478-1.017-.79-2.145-.935-3.328-.145-1.183-.166-2.41-.06-3.606.113-1.196.402-2.316.86-3.352.458-1.036 1.05-1.99 1.776-2.858.726-.868 1.583-1.63 2.552-2.261.968-.631 2.02-.958 3.14-.958 1.135 0 2.213.344 3.195 1.032 1.004.708 1.763 1.637 2.274 2.802.51 1.165.772 2.44.772 3.733 0 1.288-.262 2.56-.772 3.73-1.003 2.25-2.607 4.093-4.757 5.516-2.15 1.423-4.664 2.23-7.469 2.23s-5.319-.807-7.469-2.23c-2.15-1.423-3.754-3.266-4.757-5.516z"/></svg>
+                </a>
+                <a href="#" class="hover:text-white transition-colors" aria-label="Twitter">
+                    <svg class="h-6 w-6" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07c3.252.148 4.772 1.637 4.904 4.85.058 1.265.069 1.645.069 4.849 0 3.204-.012 3.584-.069 4.849-.132 3.212-1.644 4.73-4.904 4.849-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.128-4.772-1.637-4.904-4.85-.058-1.265-.069-1.645-.069-4.849 0-3.204.012-3.584.069-4.849.132-3.212 1.644-4.73 4.904-4.849 1.266-.058 1.644-.07 4.85-.07zm0-2.163c-3.259 0-3.666.014-4.931.071-4.003.18-6.155 2.322-6.335 6.324-.057 1.265-.071 1.672-.071 4.932 0 3.259.014 3.666.071 4.931.18 4.003 2.322 6.155 6.324 6.335 1.265.057 1.672.071 4.932.071 3.259 0 3.666-.014 4.931-.071 4.003-.18 6.155-2.322 6.324-6.324.057-1.265.071-1.672.071-4.932 0-3.259-.014-3.666-.071-4.931-.18-4.003-2.322-6.155-6.324-6.335-1.265-.057-1.672-.071-4.932-.071zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.162 6.162 6.162 6.162-2.759 6.162-6.162-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4s1.791-4 4-4 4 1.79 4 4-1.791 4-4 4zm6.5-11.458c0 .884-.716 1.6-1.6 1.6s-1.6-.716-1.6-1.6c0-.884.716-1.6 1.6-1.6s1.6.716 1.6 1.6z"/></svg>
+                </a>
             </div>
         </div>
     </div>
-</div>
-
-<div class="admin-link">
-    <a href="/admin/" class="btn btn-outline-secondary btn-sm rounded-circle shadow-sm">
-        <i class="bi bi-person-fill">Admin</i>
-    </a>
-</div>
-
-<footer class="footer mt-5">
-    <div class="container text-center">
-        <p class="mb-0">&copy; 2024 Lustre & Luxe. All rights reserved.</p>
+    <div class="container mx-auto px-4 mt-8 text-center border-t pt-8" style="border-color: #555;">
+        <p class="text-sm">&copy; 2024 Lustre & Luxe. All rights reserved.</p>
     </div>
 </footer>
 
-<!-- Load Bootstrap JS -->
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+    // JavaScript for interactive elements and animations
+
+    // 1. Parallax effect for the hero image background
+    const heroBg = document.querySelector('.hero-bg');
+    window.addEventListener('scroll', () => {
+        const scrollPosition = window.pageYOffset;
+        heroBg.style.backgroundPositionY = `${scrollPosition * 0.5}px`;
+    });
+
+    // 2. Intersection Observer for fade-in animations
+    const faders = document.querySelectorAll('.fade-in');
+    const appearOptions = {
+        threshold: 0.2
+    };
+
+    const appearOnScroll = new IntersectionObserver(function(entries, appearOnScroll) {
+        entries.forEach(entry => {
+            if (!entry.isIntersecting) {
+                return;
+            } else {
+                entry.target.classList.add('is-visible');
+                appearOnScroll.unobserve(entry.target);
+            }
+        });
+    }, appearOptions);
+
+    faders.forEach(fader => {
+        appearOnScroll.observe(fader);
+    });
+
+    // 3. Mobile menu functionality
+    const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+    const mobileMenu = document.getElementById('mobile-menu');
+
+    mobileMenuBtn.addEventListener('click', () => {
+        mobileMenu.classList.toggle('hidden');
+    });
+</script>
+
 </body>
 </html>

@@ -20,8 +20,16 @@ def cart_detail(request):
     products = []
     total = 0
 
-    for product_id, quantity in cart.items():
-        product = get_object_or_404(Product, pk=int(product_id))
+    # Use list(cart.items()) in case we modify cart inside loop
+    for product_id, quantity in list(cart.items()):
+        try:
+            product = Product.objects.get(pk=int(product_id))
+        except Product.DoesNotExist:
+            # Remove invalid product from cart
+            del cart[product_id]
+            request.session['cart'] = cart  # update session
+            continue
+
         subtotal = product.price * quantity
         total += subtotal
         products.append({
@@ -33,13 +41,17 @@ def cart_detail(request):
     return render(request, 'shop/cart_detail.html', {'cart_products': products, 'total': total})
 
 
-@require_POST
-def cart_add(request, product_id):
-    product = get_object_or_404(Product, pk=product_id)  # ensure product exists first
-    cart = request.session.get('cart', {})
-    quantity = int(request.POST.get('quantity', 1))
 
-    cart[str(product_id)] = cart.get(str(product_id), 0) + quantity
+def cart_add(request, product_id):
+    product = get_object_or_404(Product, id=product_id)
+
+    cart = request.session.get('cart', {})
+
+    if str(product_id) in cart:
+        cart[str(product_id)] += 1
+    else:
+        cart[str(product_id)] = 1
+
     request.session['cart'] = cart
     return redirect('cart_detail')
 

@@ -1,48 +1,125 @@
-
+{% load static %}
+<!--
+  Shopping Cart Page for "Lustre & Luxe"
+  Refactored from Bootstrap to Tailwind CSS for a cohesive design with the rest of the site.
+-->
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Your Cart</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your Cart - Lustre & Luxe</title>
+    <!-- Load Tailwind CSS from CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Load Google Fonts for 'Inter' and 'Playfair Display' -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* Custom font families */
+        .font-playfair {
+            font-family: 'Playfair Display', serif;
+        }
+        .font-inter {
+            font-family: 'Inter', sans-serif;
+        }
+    </style>
 </head>
-<body class="bg-light">
+<body class="bg-[#f7f3ef] text-gray-800 font-inter">
 
-<div class="container py-5">
-    <h1 class="mb-4">Your Shopping Cart</h1>
+    <!-- Navigation Bar -->
+    <nav class="bg-white shadow-sm sticky top-0 z-50">
+        <div class="container mx-auto px-4 py-4 md:flex md:items-center md:justify-between">
+            <a href="/" class="font-playfair text-2xl font-semibold text-gray-900">Lustre & Luxe</a>
+            
+            <div class="flex items-center space-x-6 mt-4 md:mt-0">
+                <!-- Navigation links -->
+                <a href="#" class="text-gray-600 hover:text-gray-900 transition duration-300">Rings</a>
+                <a href="#" class="text-gray-600 hover:text-gray-900 transition duration-300">Necklaces</a>
+                <a href="#" class="text-gray-600 hover:text-gray-900 transition duration-300">Bracelets</a>
+                
+                <!-- Search bar -->
+                <div class="relative hidden sm:block">
+                    <input type="search" placeholder="Search..." class="pl-10 pr-4 py-2 rounded-full border border-gray-300 focus:outline-none focus:ring-2 focus:ring-gray-900 transition duration-300 w-48">
+                    <svg class="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
+                </div>
+            </div>
+        </div>
+    </nav>
 
-    {% if cart_products %}
-        <table class="table table-bordered">
-            <thead>
-                <tr>
-                    <th>Product</th>
-                    <th>Quantity</th>
-                    <th>Subtotal</th>
-                    <th></th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for item in cart_products %}
-                <tr>
-                    <td>{{ item.product.name }}</td>
-                    <td>{{ item.quantity }}</td>
-                    <td>Ksh {{ item.subtotal }}</td>
-                    <td>
-                        <a href="{% url 'cart_remove' item.product.id %}" class="btn btn-danger btn-sm">Remove</a>
-                    </td>
-                </tr>
-                {% endfor %}
-            </tbody>
-        </table>
+    <div class="container mx-auto px-4 py-12 md:py-20">
+        <h1 class="font-playfair text-4xl sm:text-5xl font-semibold text-center text-gray-900 mb-10">Your Shopping Cart</h1>
 
-        <h4 class="mt-3">Total: Ksh {{ total }}</h4>
-        <a href="{% url 'checkout' %}" class="btn btn-success mt-3">Proceed to Checkout</a>
-    {% else %}
-        <p>Your cart is empty.</p>
-    {% endif %}
-</div>
+        {% if cart_products %}
+            <div class="bg-white rounded-lg shadow-xl overflow-hidden mb-8">
+                <table class="w-full table-auto">
+                    <thead>
+                        <tr class="bg-[#e8e2dd] text-gray-900 font-semibold text-left text-sm uppercase tracking-wide">
+                            <th class="p-4">Product</th>
+                            <th class="p-4 hidden sm:table-cell">Price</th>
+                            <th class="p-4">Quantity</th>
+                            <th class="p-4 hidden sm:table-cell">Subtotal</th>
+                            <th class="p-4"></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for item in cart_products %}
+                        <tr class="border-t border-gray-200 hover:bg-gray-50 transition-colors duration-200">
+                            <td class="p-4">
+                                <div class="flex items-center space-x-4">
+                                    {% if item.product.image %}
+                                        <img src="{{ item.product.image.url }}" class="w-20 h-20 object-cover rounded-md shadow" alt="{{ item.product.name }}">
+                                    {% else %}
+                                        <img src="{% static 'no_image.png' %}" class="w-20 h-20 object-cover rounded-md shadow" alt="No Image">
+                                    {% endif %}
+                                    <span class="font-medium text-gray-700">{{ item.product.name }}</span>
+                                </div>
+                            </td>
+                            <td class="p-4 hidden sm:table-cell text-gray-600">Ksh {{ item.product.price }}</td>
+                            <td class="p-4 text-gray-600">{{ item.quantity }}</td>
+                            <td class="p-4 hidden sm:table-cell text-gray-600 font-semibold">Ksh {{ item.subtotal }}</td>
+                            <td class="p-4">
+                                <a href="{% url 'cart_remove' item.product.id %}" class="text-red-500 hover:text-red-700 transition-colors duration-200">
+                                    Remove
+                                </a>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="flex flex-col md:flex-row md:justify-between items-start md:items-center space-y-4 md:space-y-0 mt-8">
+                <a href="{% url 'product_list' %}" class="w-full md:w-auto px-6 py-3 text-center rounded-full border-2 border-gray-900 text-gray-900 font-semibold hover:bg-gray-900 hover:text-white transition duration-300 shadow-md">
+                    ← Continue Shopping
+                </a>
+                
+                <div class="w-full md:w-auto p-6 bg-white rounded-lg shadow-xl text-right">
+                    <div class="flex justify-between items-center mb-4">
+                        <h4 class="text-xl font-semibold text-gray-900">Total:</h4>
+                        <h4 class="text-2xl font-bold text-gray-900">Ksh {{ total }}</h4>
+                    </div>
+                    <a href="{% url 'checkout' %}" class="w-full px-8 py-4 rounded-full text-white bg-gray-900 hover:bg-gray-700 transition duration-300 shadow-md">
+                        Proceed to Checkout
+                    </a>
+                </div>
+            </div>
+        {% else %}
+            <div class="text-center py-12">
+                <p class="text-lg text-gray-600 mb-6">Your cart is currently empty. Start exploring our exquisite collection!</p>
+                <a href="{% url 'product_list' %}" class="px-8 py-4 rounded-full text-white bg-gray-900 hover:bg-gray-700 transition duration-300 shadow-md">
+                    Start Shopping
+                </a>
+            </div>
+        {% endif %}
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-white py-6 mt-12">
+        <div class="container mx-auto px-4 text-center text-gray-500">
+            &copy; 2024 Lustre & Luxe. All rights reserved.
+        </div>
+    </footer>
 
 </body>
 </html>
-{% load static %}
-
