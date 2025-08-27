@@ -36,7 +36,7 @@
         </table>
 
         <h4 class="mt-3">Total: Ksh {{ total }}</h4>
-        <a href="#" class="btn btn-success mt-3">Proceed to Checkout</a>
+        <a href="{% url 'checkout' %}" class="btn btn-success mt-3">Proceed to Checkout</a>
     {% else %}
         <p>Your cart is empty.</p>
     {% endif %}

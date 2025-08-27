@@ -1,3 +1,4 @@
+from pyexpat.errors import messages
 from django.shortcuts import redirect, render, get_object_or_404
 from .models import Product
 
@@ -45,3 +46,44 @@ def cart_remove(request, product_id):
         del cart[str(product_id)]
     request.session['cart'] = cart
     return redirect('cart_detail')
+
+#checkout views
+
+def checkout(request):
+    cart = request.session.get('cart', {})
+
+    if request.method == "POST":
+        name = request.POST.get("name")
+        email = request.POST.get("email")
+        phone = request.POST.get("phone")
+        address = request.POST.get("address")
+
+        # Create the Order
+        order = Order.objects.create(
+            customer_name=name,
+            email=email,
+            phone=phone,
+            address=address
+        )
+
+        # Add items to Order
+        for product_id, quantity in cart.items():
+            product = get_object_or_404(Product, pk=product_id)
+            OrderItem.objects.create(
+                order=order,
+                product=product,
+                quantity=quantity
+            )
+
+            # reduce stock
+            product.stock -= quantity
+            product.save()
+
+        # clear cart
+        request.session['cart'] = {}
+        messages.success(request, "Your order has been placed successfully!")
+
+        return redirect('product_list')
+
+    return render(request, 'shop/checkout.html')
+

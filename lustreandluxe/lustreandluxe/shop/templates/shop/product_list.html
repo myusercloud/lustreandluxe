@@ -11,6 +11,12 @@
 
 <div class="container py-5">
     <h1 class="mb-4 text-center">Our Jewelry Collection</h1>
+
+    <!-- Admin Dashboard Button -->
+    <div class="text-center mb-4">
+        <a href="/admin/" class="btn btn-primary btn-lg shadow-sm">Admin!</a>
+    </div>
+
     <div class="row">
         {% for product in products %}
             <div class="col-md-4 mb-4">
@@ -25,7 +31,6 @@
                         <p class="card-text text-muted">{{ product.category }}</p>
                         <p class="fw-bold">Ksh {{ product.price }}</p>
                         <a href="{% url 'product_detail' product.pk %}" class="btn btn-dark">View Details</a>
-
                     </div>
                 </div>
             </div>
