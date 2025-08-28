@@ -3,6 +3,10 @@
   Product Detail Page for "Lustre & Luxe"
   This page has been refactored to use Tailwind CSS for a modern, elegant, and fully responsive design.
   The original static content has been replaced with Django template tags.
+  This version has been updated to use a new color palette:
+  Primary Bronze: #C19A6B
+  Background Cream: #cea57b
+  Text Charcoal: #332E2E
 -->
 <!DOCTYPE html>
 <html lang="en">
@@ -32,35 +36,78 @@
             -ms-overflow-style: none; /* IE and Edge */
             scrollbar-width: none; /* Firefox */
         }
+        /* Define custom colors in Tailwind configuration */
+        :root {
+            --color-primary-bronze: #C19A6B;
+            --color-background-cream: #cea57b;
+            --color-text-charcoal: #332E2E;
+        }
     </style>
+    <!-- Custom Tailwind Configuration for the new colors -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'primary-bronze': '#C19A6B',
+                        'background-cream': '#cea57b',
+                        'text-charcoal': '#332E2E',
+                    }
+                }
+            }
+        }
+    </script>
 </head>
-<body class="bg-[#f7f3ef] text-gray-800 font-inter">
+<body class="bg-background-cream text-text-charcoal font-inter">
 
     <!-- Navigation Bar -->
-    <nav class="bg-white shadow-sm sticky top-0 z-50">
-        <div class="container mx-auto px-4 py-4 md:flex md:items-center md:justify-between">
-            <a href="#" class="font-playfair text-2xl font-semibold text-gray-900">Lustre & Luxe</a>
-            
-            <div class="flex items-center space-x-6 mt-4 md:mt-0">
-                <!-- Navigation links -->
-                <a href="#" class="text-gray-600 hover:text-gray-900 transition duration-300">Rings</a>
-                <a href="#" class="text-gray-600 hover:text-gray-900 transition duration-300">Necklaces</a>
-                <a href="#" class="text-gray-600 hover:text-gray-900 transition duration-300">Bracelets</a>
-                
-                <!-- Search bar -->
-                <div class="relative hidden sm:block">
-                    <input type="search" placeholder="Search..." class="pl-10 pr-4 py-2 rounded-full border border-gray-300 focus:outline-none focus:ring-2 focus:ring-gray-900 transition duration-300 w-48">
-                    <svg class="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
-                </div>
-            </div>
+<nav id="navbar" class="fixed w-full z-50 transition-all duration-300 ease-in-out bg-stone-900 bg-opacity-80 backdrop-blur-lg shadow-lg">
+    <div class="container mx-auto px-4 py-4 flex justify-between items-center">
+        <!-- Logo -->
+        <a href="#hero-section" class="flex items-center space-x-2">
+            <svg class="h-8 w-8 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-3.023 3-6s-1.343-6-3-6m0 12c-1.657 0-3-3.023-3-6s1.343-6 3-6m-9 6h6"></path>
+            </svg>
+            <span class="playfair-display text-2xl font-bold tracking-widest text-white">Lustre & Luxe</span>
+        </a>
+        <!-- Nav Links -->
+        <div class="hidden md:flex items-center space-x-10">
+            <a href="#hero-section" class="text-white hover:text-gray-300 transition-colors">Home</a>
+            <a href="#our-products" class="text-white hover:text-gray-300 transition-colors">Shop All</a>
+            <a href="#featured-collections" class="text-white hover:text-gray-300 transition-colors">Collections</a>
+            <a href="#" class="text-white hover:text-gray-300 transition-colors">About</a>
+            <a href="#" class="text-white hover:text-gray-300 transition-colors">Contact</a>
+            <!-- Shopping Cart Icon -->
+            <a href="#" class="text-white hover:text-gray-300 transition-colors" aria-label="Shopping Cart">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.182 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
+                </svg>
+            </a>
         </div>
-    </nav>
+        <!-- Mobile menu button -->
+        <button id="mobile-menu-btn" class="text-white md:hidden" aria-label="Open mobile menu">
+            <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path>
+            </svg>
+        </button>
+    </div>
+    <!-- Mobile Menu -->
+    <div id="mobile-menu" class="hidden md:hidden bg-stone-900 text-gray-200 py-4 px-4 shadow-lg">
+        <a href="#hero-section" class="block py-2">Home</a>
+        <a href="#our-products" class="block py-2">Shop All</a>
+        <a href="#featured-collections" class="block py-2">Collections</a>
+        <a href="#" class="block py-2">About</a>
+        <a href="#" class="block py-2">Contact</a>
+        <a href="#" class="block py-2 mt-2 border-t border-gray-700">Shopping Cart</a>
+    </div>
+</nav>
+
 
     <!-- Product Hero Section -->
-    <section class="bg-[#e8e2dd] py-12 md:py-20">
+    <section class="bg-background-cream py-12 md:py-20">
         <div class="container mx-auto px-4 md:px-8 lg:px-16">
             <!-- Back to collection button -->
-            <a href="{% url 'product_list' %}" class="flex items-center text-gray-600 hover:text-gray-900 mb-6 transition duration-300">
+            <a href="{% url 'product_list' %}" class="flex items-center text-text-charcoal hover:text-primary-bronze mb-6 transition duration-300">
                 <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path></svg>
                 <span>Back to Collection</span>
             </a>
@@ -69,29 +116,29 @@
                 <!-- Product Image Column -->
                 <div class="w-full lg:w-1/2 mb-8 lg:mb-0">
                     {% if product.image %}
-                        <img src="{{ product.image.url }}" class="w-full h-auto rounded-lg shadow-xl" alt="{{ product.name }}">
+                        <img src="{{ product.image.url }}" class="w-160 h-160 rounded-lg shadow-xl" alt="{{ product.name }}">
                     {% else %}
-                        <img src="{% static 'no_image.png' %}" class="w-full h-auto rounded-lg shadow-xl" alt="No Image">
+                        <img src="{% static 'no_image.png' %}" class="w-160 h-160 rounded-lg shadow-xl" alt="No Image">
                     {% endif %}
                 </div>
                 
                 <!-- Product Details Column -->
                 <div class="w-full lg:w-1/2 flex flex-col justify-center">
-                    <h1 class="font-playfair text-4xl sm:text-5xl font-semibold leading-tight text-gray-900">{{ product.name }}</h1>
-                    <p class="text-gray-500 text-lg mt-2">{{ product.category }}</p>
-                    <p class="text-gray-700 text-lg mt-4 leading-relaxed">{{ product.description }}</p>
+                    <h1 class="font-playfair text-4xl sm:text-5xl font-semibold leading-tight text-text-charcoal">{{ product.name }}</h1>
+                    <p class="text-text-charcoal text-lg mt-2">{{ product.category }}</p>
+                    <p class="text-text-charcoal text-lg mt-4 leading-relaxed">{{ product.description }}</p>
                     
                     <div class="mt-6 flex items-center justify-between">
-                        <p class="text-3xl font-bold text-gray-900">Ksh {{ product.price }}</p>
-                        <p class="text-lg text-green-600 font-medium">In Stock: {{ product.stock }}</p>
+                        <p class="text-3xl font-bold text-text-charcoal">Ksh {{ product.price }}</p>
+                        <p class="text-lg text-primary-bronze font-medium">In Stock: {{ product.stock }}</p>
                     </div>
 
                     <!-- Add to Cart Form -->
                     <form method="post" action="{% url 'cart_add' product.id %}" class="mt-8">
                         {% csrf_token %}
                         <div class="flex items-center space-x-4">
-                            <input type="number" name="quantity" value="1" min="1" max="{{ product.stock }}" class="w-20 px-3 py-2 text-center rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-gray-900">
-                            <button type="submit" class="w-auto px-8 py-3 rounded-full text-white bg-gray-900 hover:bg-gray-700 transition duration-300 shadow-md">
+                            <input type="number" name="quantity" value="1" min="1" max="{{ product.stock }}" class="w-20 px-3 py-2 text-center rounded-md border border-primary-bronze focus:outline-none focus:ring-2 focus:ring-primary-bronze">
+                            <button type="submit" class="w-auto px-8 py-3 rounded-full text-text-charcoal bg-primary-bronze hover:bg-[#A37B55] transition duration-300 shadow-md">
                                 Add to Cart
                             </button>
                         </div>
@@ -102,14 +149,14 @@
     </section>
 
     <!-- Related Products Section -->
-    <section class="bg-white py-12 md:py-20">
+    <section class="bg-background-cream py-12 md:py-20">
         <div class="container mx-auto px-4 md:px-8 lg:px-16">
-            <h2 class="font-playfair text-3xl sm:text-4xl font-semibold text-center text-gray-900 mb-10">You Might Also Like</h2>
+            <h2 class="font-playfair text-3xl sm:text-4xl font-semibold text-center text-text-charcoal mb-10">You Might Also Like</h2>
             
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
                 <!-- Loop through related products (Django template syntax) -->
                 {% for related_product in related_products %}
-                    <div class="bg-[#f7f3ef] rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300 group">
+                    <div class="bg-background-cream rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300 group">
                         <a href="{% url 'product_detail' related_product.pk %}" class="block">
                             {% if related_product.image %}
                                 <img src="{{ related_product.image.url }}" class="w-full h-64 object-cover rounded-t-lg" alt="{{ related_product.name }}">
@@ -117,15 +164,15 @@
                                 <img src="{% static 'no_image.png' %}" class="w-full h-64 object-cover rounded-t-lg" alt="No Image">
                             {% endif %}
                             <div class="p-5 text-center">
-                                <h3 class="font-playfair text-xl font-semibold text-gray-900 group-hover:text-gray-700 transition-colors">{{ related_product.name }}</h3>
-                                <p class="text-gray-500 text-sm mt-1">{{ related_product.category }}</p>
-                                <p class="text-xl font-bold text-gray-900 mt-2">Ksh {{ related_product.price }}</p>
+                                <h3 class="font-playfair text-xl font-semibold text-text-charcoal group-hover:text-primary-bronze transition-colors">{{ related_product.name }}</h3>
+                                <p class="text-text-charcoal text-sm mt-1">{{ related_product.category }}</p>
+                                <p class="text-xl font-bold text-text-charcoal mt-2">Ksh {{ related_product.price }}</p>
                             </div>
                         </a>
                     </div>
                 {% empty %}
                     <div class="col-12 text-center w-full">
-                        <p class="text-center text-gray-500">No related products found.</p>
+                        <p class="text-center text-text-charcoal">No related products found.</p>
                     </div>
                 {% endfor %}
             </div>
@@ -133,8 +180,8 @@
     </section>
 
     <!-- Footer -->
-    <footer class="bg-white py-6 mt-12">
-        <div class="container mx-auto px-4 text-center text-gray-500">
+    <footer class="bg-background-cream py-6 mt-12">
+        <div class="container mx-auto px-4 text-center text-text-charcoal">
             &copy; 2024 Lustre & Luxe. All rights reserved.
         </div>
     </footer>
