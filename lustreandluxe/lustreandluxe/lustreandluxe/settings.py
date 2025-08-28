@@ -118,7 +118,13 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.2/howto/static-files/
 
-STATIC_URL = 'static/'
+# Tell Django where static files are during development
+STATIC_URL = '/static/'
+
+# Optional: collect static files here (for production)
+STATICFILES_DIRS = [
+    BASE_DIR / "static",
+]
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
@@ -135,3 +141,13 @@ MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+
+
+# Mpesa API credentials (sandbox)
+MPESA_CONSUMER_KEY = 'your_consumer_key'
+MPESA_CONSUMER_SECRET = 'your_consumer_secret'
+MPESA_SHORTCODE = '174379'  # Sandbox shortcode
+MPESA_PASSKEY = 'your_passkey'  # Lipa Na Mpesa Online passkey
+MPESA_CALLBACK_URL = 'https://yourdomain.com/mpesa/callback/'  # Replace with your callback URL
+MPESA_ENVIRONMENT = 'sandbox'  # Change to 'production' in production
+
