@@ -1,17 +1,11 @@
 {% load static %}
-<!--
-  Checkout Page for "Lustre & Luxe"
-  Refactored from Bootstrap to Tailwind CSS for a cohesive design.
--->
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Checkout - Lustre & Luxe</title>
-    <!-- Load Tailwind CSS from CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Load Google Fonts for 'Inter' and 'Playfair Display' -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
@@ -27,18 +21,15 @@
 </head>
 <body class="bg-[#f7f3ef] text-gray-800 font-inter">
 
-    <!-- Navigation Bar -->
     <nav class="bg-white shadow-sm sticky top-0 z-50">
         <div class="container mx-auto px-4 py-4 md:flex md:items-center md:justify-between">
             <a href="/" class="font-playfair text-2xl font-semibold text-gray-900">Lustre & Luxe</a>
             
             <div class="flex items-center space-x-6 mt-4 md:mt-0">
-                <!-- Navigation links -->
                 <a href="#" class="text-gray-600 hover:text-gray-900 transition duration-300">Rings</a>
                 <a href="#" class="text-gray-600 hover:text-gray-900 transition duration-300">Necklaces</a>
                 <a href="#" class="text-gray-600 hover:text-gray-900 transition duration-300">Bracelets</a>
                 
-                <!-- Search bar with SVG icon -->
                 <div class="relative hidden sm:block">
                     <input type="search" placeholder="Search..." class="pl-10 pr-4 py-2 rounded-full border border-gray-300 focus:outline-none focus:ring-2 focus:ring-gray-900 transition duration-300 w-48">
                     <svg class="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
@@ -51,7 +42,7 @@
         <h1 class="font-playfair text-4xl sm:text-5xl font-semibold text-center text-gray-900 mb-10">Secure Checkout</h1>
 
         <div class="bg-white p-8 sm:p-10 rounded-lg shadow-xl">
-            <form method="post">
+            <form method="post" id="order-form">
                 {% csrf_token %}
                 <div class="mb-6">
                     <label for="fullName" class="block text-gray-700 font-semibold mb-2">Full Name</label>
@@ -83,14 +74,52 @@
                 </div>
             </form>
         </div>
+
+        <div class="bg-white p-8 sm:p-10 rounded-lg shadow-xl mt-8">
+            <h2 class="font-playfair text-2xl font-semibold text-center text-gray-900 mb-6">Pay with M-PESA</h2>
+            <form id="payment-form">
+                <div class="mb-4">
+                    <label for="phone-mpesa" class="block text-gray-700 font-semibold mb-2">Phone Number</label>
+                    <input type="text" id="phone-mpesa" class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-gray-900 transition duration-300" placeholder="e.g., 254712345678" required>
+                </div>
+                <div class="mb-6">
+                    <label for="amount-mpesa" class="block text-gray-700 font-semibold mb-2">Amount</label>
+                    <input type="number" id="amount-mpesa" class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-gray-900 transition duration-300" placeholder="Enter amount" required>
+                </div>
+                <button type="submit" class="w-full px-8 py-4 rounded-full text-white bg-gray-900 hover:bg-gray-700 transition duration-300 shadow-md">
+                    Pay with M-PESA
+                </button>
+            </form>
+        </div>
+
     </div>
 
-    <!-- Footer -->
     <footer class="bg-white py-6 mt-12">
         <div class="container mx-auto px-4 text-center text-gray-500">
             &copy; 2024 Lustre & Luxe. All rights reserved.
         </div>
     </footer>
+
+    <script>
+        document.getElementById("payment-form").addEventListener("submit", async (e) => {
+            e.preventDefault();
+            const phone = document.getElementById("phone-mpesa").value;
+            const amount = document.getElementById("amount-mpesa").value;
+    
+            try {
+                const res = await fetch(`/initiate-payment/?phone=${phone}&amount=${amount}`);
+                if (!res.ok) {
+                    throw new Error(`HTTP error! status: ${res.status}`);
+                }
+                const data = await res.json();
+                console.log(data);
+                alert("Check your phone to complete payment");
+            } catch (error) {
+                console.error("Payment initiation failed:", error);
+                alert("Failed to initiate payment. Please try again.");
+            }
+        });
+    </script>
 
 </body>
 </html>

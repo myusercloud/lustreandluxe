@@ -3,6 +3,11 @@ from django.contrib import messages
 from django.shortcuts import redirect, render, get_object_or_404
 from .models import Order, OrderItem, Product
 from django.views.decorators.http import require_POST
+from django.http import JsonResponse
+from .mpesa import lipa_na_mpesa
+from django.views.decorators.csrf import csrf_exempt
+import json
+
 
 
 # Product views
@@ -103,4 +108,23 @@ def checkout(request):
         return redirect('product_list')
 
     return render(request, 'shop/checkout.html')
+
+
+
+
+
+def initiate_payment(request):
+    phone_number = request.GET.get("phone")   # e.g. 2547XXXXXXX
+    amount = request.GET.get("amount")        # e.g. 1000
+    response = lipa_na_mpesa(phone_number, amount)
+    return JsonResponse(response)
+
+
+
+@csrf_exempt
+def mpesa_callback(request):
+    data = json.loads(request.body.decode('utf-8'))
+    print("Callback Data:", data)  # Log for testing
+    # TODO: Save to database (transaction success/failure)
+    return JsonResponse({"ResultCode": 0, "ResultDesc": "Accepted"})
 

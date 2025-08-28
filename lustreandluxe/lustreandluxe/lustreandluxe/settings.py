@@ -141,3 +141,13 @@ MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+
+
+# Mpesa API credentials (sandbox)
+MPESA_CONSUMER_KEY = 'your_consumer_key'
+MPESA_CONSUMER_SECRET = 'your_consumer_secret'
+MPESA_SHORTCODE = '174379'  # Sandbox shortcode
+MPESA_PASSKEY = 'your_passkey'  # Lipa Na Mpesa Online passkey
+MPESA_CALLBACK_URL = 'https://yourdomain.com/mpesa/callback/'  # Replace with your callback URL
+MPESA_ENVIRONMENT = 'sandbox'  # Change to 'production' in production
+
